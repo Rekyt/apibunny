@@ -5,6 +5,7 @@ Module docstring.
 """
 import urllib2
 import json
+import random
 
 class Cell(object):
 	"""
@@ -16,6 +17,7 @@ class Cell(object):
 		self.name = ""
 		self.url = ""
 		self.neighbors = {}
+		self.type = ""
 		
 
 		self.number = str(json_dump["cells"][0]["id"])
@@ -23,16 +25,28 @@ class Cell(object):
 		self.name = json_dump["cells"][0]["name"]
 		self.neighbors = json_dump["cells"][0]["links"]
 		del self.neighbors["maze"]
+		self.type = json_dump["cells"][0]["type"]
 
 	def __str__(self):
 
 		string = "Cell: \"{}\" ID: {}\nNeighbors:\n".format(self.name, self.number)
 		for key in self.neighbors.keys():
-			string += "Direction: {} ID: {}".format(key, self.neighbors[key])
+			string += "{} ID: {}\n".format(key, self.neighbors[key])
 
 		return string
 
+	def __repr__(self):
+		return self.__str__()
+
+	def random_neighbors(self):
+		"""
+		Return a random neighbor of the cell.
+		"""
+		keys = self.neighbors.keys()
+		rand = random.randrange(len(keys))
+
+		return self.neighbors[keys[rand]]
 
 start_url = urllib2.urlopen('http://apibunny.com/cells/taTKQ3Kn4KNnmwVI')
 
-start_cell = json.load(start_url)
+start_cell = Cell(json.load(start_url))
