@@ -61,13 +61,13 @@ class Character(object):
 		self.current_cell = None
 
 		self.current_cell = start_cell
-		self.known_cells.append(start_cell)
+		self.known_cells.append(start_cell.number)
 		
 		for neigh in start_cell.neighbors.values():
 			neigh_cell = return_cell(neigh)
-			self.known_cells.append(neigh_cell)
+			self.known_cells.append(neigh_cell.number)
 		
-		self.visited_cells.append(self.current_cell)
+		self.visited_cells.append(self.current_cell.number)
 
 	def __repr__(self):
 		return "Character in\n{}".format(self.current_cell)
@@ -75,7 +75,7 @@ class Character(object):
 	def __str__(self):
 		return self.__str__()
 
-	def advance(self):
+	def random_advance(self):
 		"""
 		Advance in an direction.
 		"""
@@ -84,17 +84,26 @@ class Character(object):
 		rand_cell = random.randrange(len(neigh_vals))
 
 		new_key = neigh_vals[rand_cell]
-
 		new_cell = return_cell(new_key)
 
 		self.current_cell = new_cell
-		if new_cell not in self.known_cells:
+		if new_cell.number not in self.visited_cells:
+			self.visited_cells.append(new_cell.number)
 			
-			self.visited_cells.append(new_cell)
 			for neigh in new_cell.neighbors.values():
 				neigh_cell = return_cell(neigh)
-				if neigh_cell not in self.known_cells:
-					self.known_cells.append(neigh_cell)
+				if neigh_cell.number not in self.known_cells:
+					self.known_cells.append(neigh_cell.number)
+
+		print "New cell type: {}".format(self.current_cell.type)
+
+	def whole(self, method):
+
+		while len(self.known_cells) != len(self.visited_cells):
+			print "Current Cell: {}".format(self.current_cell.name)
+			self.random_advance()
+			
+
 
 
 
