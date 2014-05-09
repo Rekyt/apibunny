@@ -61,8 +61,12 @@ class Character(object):
 		self.current_cell = start_cell
 		self.known_cells.append(start_cell)
 		for neigh in start_cell.neighbors.values():
-			self.known_cells.append(neigh)
-		self.visited_cells.append(start_cell)
+			
+			neigh_url = urllib2.urlopen('http://apibunny.com/cells/'+neigh)
+			neigh_cell = Cell(json.load(neigh_url))
+			self.known_cells.append(neigh_cell)
+		
+		self.visited_cells.append(self.current_cell)
 
 	def __repr__(self):
 		return "Character in\n{}".format(self.current_cell)
@@ -71,3 +75,5 @@ class Character(object):
 start_url = urllib2.urlopen('http://apibunny.com/cells/taTKQ3Kn4KNnmwVI')
 
 start_cell = Cell(json.load(start_url))
+
+valiant = Character(start_cell)
