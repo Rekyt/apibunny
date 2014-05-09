@@ -9,6 +9,6 @@ Still to implement:
 
 - [ ] Depth-first search
 - [ ] Breath-first search
-- [ ] Repetitions
-- [ ] (Simple) Graphics of the maze
+- [ ] Repetitions
+- [ ] (Simple) Graphics of the maze
 
