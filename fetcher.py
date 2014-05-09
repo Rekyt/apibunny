@@ -13,21 +13,22 @@ class Cell(object):
 	"""
 	def __init__(self, json_dump):
 
-		self.number = ""
-		self.name = ""
-		self.url = ""
+		self.number = u""
+		self.name = u""
+		self.url = u""
 		self.neighbors = {}
-		self.type = ""
+		self.type = u""
 		
 
 		self.number = str(json_dump["cells"][0]["id"])
 		self.url = "http://apibunny.com/cells/" + self.number
-		self.name = json_dump["cells"][0]["name"]
+		self.url.encode("utf-8")
+		self.name = json_dump["cells"][0]["name"].encode("utf-8")
 		
 		self.neighbors = json_dump["cells"][0]["links"]
 		del self.neighbors["maze"]
 		
-		self.type = json_dump["cells"][0]["type"]
+		self.type = json_dump["cells"][0]["type"].encode("utf-8")
 
 	def __str__(self):
 
