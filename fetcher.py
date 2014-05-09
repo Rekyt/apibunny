@@ -47,6 +47,27 @@ class Cell(object):
 
 		return self.neighbors[keys[rand]]
 
+class Character(object):
+	"""
+	Character class to move in the maze.
+	"""
+
+	def __init__(self, start_cell):
+		
+		self.known_cells = []
+		self.visited_cells = []
+		self.current_cell = None
+
+		self.current_cell = start_cell
+		self.known_cells.append(start_cell)
+		for neigh in start_cell.neighbors.values():
+			self.known_cells.append(neigh)
+		self.visited_cells.append(start_cell)
+
+	def __repr__(self):
+		return "Character in\n{}".format(self.current_cell)
+
+
 start_url = urllib2.urlopen('http://apibunny.com/cells/taTKQ3Kn4KNnmwVI')
 
 start_cell = Cell(json.load(start_url))
