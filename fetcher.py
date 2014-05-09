@@ -75,6 +75,29 @@ class Character(object):
 	def __str__(self):
 		return self.__str__()
 
+	def advance(self):
+		"""
+		Advance in an direction.
+		"""
+
+		neigh_vals = self.current_cell.neighbors.values()
+		rand_cell = random.randrange(len(neigh_vals))
+
+		new_key = neigh_vals[rand_cell]
+
+		new_cell = return_cell(new_key)
+
+		self.current_cell = new_cell
+		if new_cell not in self.known_cells:
+			
+			self.visited_cells.append(new_cell)
+			for neigh in new_cell.neighbors.values():
+				neigh_cell = return_cell(neigh)
+				if neigh_cell not in self.known_cells:
+					self.known_cells.append(neigh_cell)
+
+
+
 def return_cell(cell_id):
 	"""
 	Return a Cell object from a cell id
