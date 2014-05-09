@@ -23,8 +23,10 @@ class Cell(object):
 		self.number = str(json_dump["cells"][0]["id"])
 		self.url = "http://apibunny.com/cells/" + self.number
 		self.name = json_dump["cells"][0]["name"]
+		
 		self.neighbors = json_dump["cells"][0]["links"]
 		del self.neighbors["maze"]
+		
 		self.type = json_dump["cells"][0]["type"]
 
 	def __str__(self):
@@ -60,10 +62,9 @@ class Character(object):
 
 		self.current_cell = start_cell
 		self.known_cells.append(start_cell)
+		
 		for neigh in start_cell.neighbors.values():
-			
-			neigh_url = urllib2.urlopen('http://apibunny.com/cells/'+neigh)
-			neigh_cell = Cell(json.load(neigh_url))
+			neigh_cell = return_cell(neigh)
 			self.known_cells.append(neigh_cell)
 		
 		self.visited_cells.append(self.current_cell)
@@ -71,9 +72,21 @@ class Character(object):
 	def __repr__(self):
 		return "Character in\n{}".format(self.current_cell)
 
+	def __str__(self):
+		return self.__str__()
 
-start_url = urllib2.urlopen('http://apibunny.com/cells/taTKQ3Kn4KNnmwVI')
+def return_cell(cell_id):
+	"""
+	Return a Cell object from a cell id
+	"""
 
-start_cell = Cell(json.load(start_url))
+	url = 'http://apibunny.com/cells/'+cell_id
+	neigh_url = urllib2.urlopen(url)
+	neigh_cell = Cell(json.load(neigh_url))
+
+	return neigh_cell
+
+
+start_cell = return_cell('taTKQ3Kn4KNnmwVI')
 
 valiant = Character(start_cell)
