@@ -105,7 +105,7 @@ class Character(object):
 			self.random_advance()
 			i += 1
 
-		print "Found the exit in {} steps.".format(i)
+		print "Found the exit in {} steps.\nVisiting {} cells.".format(i, len(self.visited_cells))
 			
 
 
