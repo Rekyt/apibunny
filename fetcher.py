@@ -100,7 +100,7 @@ class Character(object):
 
 	def whole(self, method):
 
-		while len(self.known_cells) != len(self.visited_cells):
+		while self.current_cell.type != "exit":
 			print "Current Cell: {}".format(self.current_cell.name)
 			self.random_advance()
 			
